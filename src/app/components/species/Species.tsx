@@ -30,8 +30,7 @@ const Species: React.FC<SpeciesProps> = ({ species, setSpecies }) => {
           sx={{
             height: "100%",
             width: "70%",
-            border: "solid 1px #463ae2",
-            backgroundColor: species === "cat" ? "#463ae2" : "#3dadff",
+            backgroundColor: species === "cat" ? "#0f4d57" : "#80b6cf",
             color: "white",
             borderRadius: "16px",
           }}
@@ -52,8 +51,7 @@ const Species: React.FC<SpeciesProps> = ({ species, setSpecies }) => {
           sx={{
             height: "100%",
             width: "70%",
-            border: "solid 1px #463ae2",
-            backgroundColor: species === "dog" ? "#463ae2" : "#3dadff",
+            backgroundColor: species === "dog" ? "#0f4d57" : "#80b6cf",
             color: "white",
             borderRadius: "16px",
           }}

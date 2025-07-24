@@ -6,6 +6,12 @@ interface LossesProps {
 }
 
 function Losses({ losses, setLosses }: LossesProps) {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    const numericValue = value === '' ? 0 : Number(value);
+    setLosses(numericValue);
+  };
+
   return (
     <Box sx={{ height: "100%", width: "100%", display: "flex" }}>
       <Box
@@ -13,11 +19,11 @@ function Losses({ losses, setLosses }: LossesProps) {
           height: "100%",
           width: "50%",
           display: "flex",
-          justifyContent: "center",
+          justifyContent: "left",
           alignItems: "center",
         }}
       >
-        <Typography>Cont. losses (ml/h)</Typography>
+        <Typography sx={{fontWeight:"800", color:"#0f4d57"}}>Cont. losses (ml/h)</Typography>
       </Box>
       <Box
         sx={{
@@ -30,8 +36,8 @@ function Losses({ losses, setLosses }: LossesProps) {
       >
         <Input
           type="number"
-          value={losses}
-          onChange={(e) => setLosses(Number(e.target.value))}
+          value={losses === 0 ? '' : losses}
+          onChange={handleChange}
           placeholder="Enter losses"
           disableUnderline
           sx={{

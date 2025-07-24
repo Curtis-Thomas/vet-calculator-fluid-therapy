@@ -6,6 +6,12 @@ interface DehydrationProps {
 }
 
 function Dehydration({ dehydration, setDehydration }: DehydrationProps) {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    const numericValue = value === '' ? 0 : Number(value);
+    setDehydration(numericValue);
+  };
+
   return (
     <Box sx={{ height: "100%", width: "100%", display: "flex" }}>
       <Box
@@ -13,11 +19,11 @@ function Dehydration({ dehydration, setDehydration }: DehydrationProps) {
           height: "100%",
           width: "50%",
           display: "flex",
-          justifyContent: "center",
+          justifyContent: "left",
           alignItems: "center",
         }}
       >
-        <Typography>Dehydration (%)</Typography>
+        <Typography sx={{fontWeight:"800", color:"#0f4d57"}}>Dehydration (%)</Typography>
       </Box>
       <Box
         sx={{
@@ -30,11 +36,9 @@ function Dehydration({ dehydration, setDehydration }: DehydrationProps) {
       >
         <Input
           type="number"
-          value={dehydration}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            setDehydration(Number(e.target.value))
-          }
-          placeholder="Enter dehydration percentage"
+          value={dehydration === 0 ? '' : dehydration}
+          onChange={handleChange}
+          placeholder="Enter dehydration %"
           disableUnderline
           sx={{
             width: "80%",

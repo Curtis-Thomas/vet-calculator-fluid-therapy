@@ -1,5 +1,5 @@
 "use client";
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import Weight from "./components/weight/Weight";
 import Dehydration from "./components/dehydration/Dehydration";
 import Losses from "./components/losses/Losses";
@@ -39,15 +39,15 @@ export default function Home() {
       result = {
         shockMin: 15 * weight,
         shockMax: 20 * weight,
-        maintenanceDay: 30 * weight + 70,
-        maintenanceHour: (30 * weight + 70) / 24,
+        maintenanceDay: weight > 0 ? 30 * weight + 70 : 0,
+        maintenanceHour: weight > 0 ? (30 * weight + 70) / 24 : 0,
       };
     } else if (species === "cat") {
       result = {
         shockMin: 5 * weight,
         shockMax: 10 * weight,
-        maintenanceDay: 30 * weight + 70,
-        maintenanceHour: (30 * weight + 70) / 24,
+        maintenanceDay: weight > 0 ? 30 * weight + 70 : 0,
+        maintenanceHour: weight > 0 ? (30 * weight + 70) / 24 : 0,
       };
     } else {
       result = {
@@ -63,9 +63,19 @@ export default function Home() {
   }, [species, weight]);
 
   useEffect(() => {
-    if (!weight || !species || !results[0]) return;
+    if (!weight || !species || !results[0]) {
+      setResultsFluid([
+        {
+          fluidTherapyTotal: 0,
+          fluidTherapy6: 0,
+          fluidTherapy12: 0,
+          fluidTherapy24: 0,
+        },
+      ]);
+      return;
+    }
 
-    const dehydrationFluid = weight * dehydration;
+    const dehydrationFluid = weight * dehydration * 10;
     const dehydrationFluid6 = dehydrationFluid / 6;
 
     const result = {
@@ -82,28 +92,30 @@ export default function Home() {
   }, [results, dehydration, losses, species, weight]);
 
   return (
-    <Box sx={{ height: "100vh", width: "100vw", backgroundColor: "#3dadff" }}>
-      <Box sx={{ height: "10%" }}>
+    <Box sx={{ height: "100vh", width: "100vw", backgroundColor: "#d1f0ff", p:2 }}>
+      <Box sx={{minHeight:"30%", backgroundColor:"#ffffff", borderRadius:"16px", padding:1}}>
+        <Box sx={{height:"10%", display:"flex", justifyContent:"center", alignItems:"center"}}>
+          <Typography sx={{color:"#0f4d57", fontWeight:"800", fontSize:"1.4rem", mb:2}}>Patient Details</Typography>
+        </Box>
+      <Box sx={{ height: "20%", p:1}}>
         <Weight weight={weight} setWeight={setWeight} />
       </Box>
-      <Box sx={{ height: "10%" }}>
+      <Box sx={{ height: "20%", p:1 }}>
         <Dehydration
           dehydration={dehydration}
           setDehydration={setDehydration}
         />
       </Box>
-      <Box sx={{ height: "10%" }}>
+      <Box sx={{ height: "20%", p:1 }}>
         <Losses losses={losses} setLosses={setLosses} />
       </Box>
-      <Box
-        sx={{
-          height: "10%",
-        }}
+      <Box sx={{height: "20%", p:1}}
       >
         <Species species={species} setSpecies={setSpecies} />
       </Box>
-      <Box sx={{ height: "60%" }}>
-        <Results results={results} resultsFluid={resultsFluid} />
+      </Box>
+      <Box sx={{ minHeight: "60%" }}>
+        <Results results={results} resultsFluid={resultsFluid} species={species} />
       </Box>
     </Box>
   );
