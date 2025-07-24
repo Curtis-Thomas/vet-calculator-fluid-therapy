@@ -92,7 +92,7 @@ export default function Home() {
   }, [results, dehydration, losses, species, weight]);
 
   return (
-    <Box sx={{ height: "100vh", width: "100vw", backgroundColor: "#d1f0ff", p:2 }}>
+    <Box sx={{ minHeight: "100vh", width: "100vw", backgroundColor: "#d1f0ff", p:2 }}>
       <Box sx={{minHeight:"30%", backgroundColor:"#ffffff", borderRadius:"16px", padding:1}}>
         <Box sx={{height:"10%", display:"flex", justifyContent:"center", alignItems:"center"}}>
           <Typography sx={{color:"#0f4d57", fontWeight:"800", fontSize:"1.4rem", mb:2}}>Patient Details</Typography>
